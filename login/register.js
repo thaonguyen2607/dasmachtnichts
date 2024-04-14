@@ -1,3 +1,9 @@
+import { app, db } from "/firebase.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+} from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+
 const registerForm = document.getElementById("register-form");
 
 //xu ly khi nguoi dung bam nut dang ky
@@ -34,6 +40,20 @@ registerForm.onsubmit = function (event) {
   //   } else {
   //     confirmPasswordError.innerHTML = "";
   //   }
-
+  const auth = getAuth();
+  createUserWithEmailAndPassword(auth, email.value, password.value)
+    .then((userCredential) => {
+      // Signed up
+      const user = userCredential.user;
+      alert("register success");
+      window.location.href = "/";
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+      alert(errorMessage);
+    });
   console.log("thanh cong");
 };
